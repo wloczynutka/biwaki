@@ -1,0 +1,7 @@
+parameters:
+#    parameter_name: value
+
+services:
+    import_service:
+        class: BiwakiBundle\Util\Import\ImportService
+        arguments: ["@doctrine.orm.entity_manager"]

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+<p>alsdkjsl</p>
+
+{#
+
+{% block javascripts %}
+    <script src="{{ asset('js/dropzone.js') }}"></script>
+{% endblock %}
+{% block title %}{{ parent() }}: {{place.name}} - edit{% endblock %}
+{% block body %}
+
+{% if place.id != null %}
+    <form action="{{ url('uploadphoto', { 'placeId': place.id, 'travelId': travel.id }) }}" class="dropzone" id="my-awesome-dropzone"></form>
+{% endif %}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
+{% endblock %}
+
+#}

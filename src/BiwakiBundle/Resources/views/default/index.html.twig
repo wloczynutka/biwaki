@@ -1,0 +1,46 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% trans %}Biwaki{% endtrans %} {% block titleExt %}{% endblock %}</title>
+    <link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" media="all">
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" media="all">
+    <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
+	{% block javascripts %}{% endblock %}
+</head>
+
+<body>
+    <!--header-->
+	<div class="header">
+		<div class="container">
+            <p>{% trans %}Biwaki{% endtrans %}</p>
+            <div data-wow-delay=".5s" style="visibility: visible; -webkit-animation-delay: .5s; color:#DDD">
+                {% if app.user %}
+                    {{ app.user.username }}
+                {% else %}
+                   {% trans %}User is not logged in. Some features are disabled{% endtrans %}.
+                   <a href="{{ url('biwaki_login') }}">{% trans %}Please log-in{% endtrans %}</a>
+                {% endif %}
+            </div>
+		</div>
+	</div>
+    <div class="container">
+        <ul class="nav navbar-nav navbar-left">
+            <li class="hvr-bounce-to-bottom {% if app.request.attributes.get('_route') == 'biwaki_main'%} active {% endif %}"><a href="{{ path('biwaki_main') }}">Home</a></li>
+            <li class="hvr-bounce-to-bottom {% if app.request.attributes.get('_route') == 'biwaki_import'%} active {% endif %}"><a href="{{ path('biwaki_import') }}">Import</a></li>
+        </ul>
+    </div>
+
+    {% block content %}{% endblock %}
+
+
+    <div class="container">
+        <p>Copyright © 2017 Włóczynutka. All rights reserved</p>
+    </div>
+</body>
+</html>
