@@ -91,6 +91,10 @@ class Import
         switch ($countryName) {
             case 'Belarus':
                 return 'BY';
+            case 'Bosnia and Herzegovina':
+                return 'BA';
+            case 'Croatia':
+                return 'HR';
             case 'Czech Republic':
                 return 'CZ';
             case 'Germany':
@@ -99,6 +103,8 @@ class Import
                 return 'LT';
             case 'Poland':
                 return 'PL';
+            case 'Romania':
+                return 'RO';
             case 'Russia':
                 return 'RU';
             case 'Slovakia':
@@ -127,5 +133,15 @@ class Import
         }
         return $biwakiOriginalId;
     }
+
+    /**
+     * @return  \BiwakiBundle\Entity\User
+     */
+    protected function buildUser($userId)
+    {
+        $user = $this->entityManager->getRepository('BiwakiBundle:User')->findOneById($userId);
+        return $user;
+    }
+
 
 }

@@ -37,7 +37,7 @@ class Biwak
 
     /**
      * @var integer
-     * @ORM\Column(name="origin_id", type="integer")
+     * @ORM\Column(name="origin_id", type="string")
      */
     private $originId;
 
@@ -45,6 +45,11 @@ class Biwak
      * @ORM\OneToMany(targetEntity="Description", mappedBy="biwakId")
      */
     private $descriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="biwakId")
+     */
+    private $images;
 
     /**
      * @var string
@@ -81,7 +86,7 @@ class Biwak
     /**
      * @var string
      *
-     * @ORM\Column(name="linkToOriginal", type="string", length=255)
+     * @ORM\Column(name="linkToOriginal", type="string", length=255, nullable=true)
      */
     private $linkToOriginal;
 
@@ -136,6 +141,7 @@ class Biwak
         $this->attributes = new ArrayCollection();
         $this->descriptions = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -414,7 +420,7 @@ class Biwak
     }
 
     /**
-     * Remove descriptions
+     * Remove attribute
      * @param Attribute $attribute
      */
     public function removeAttribute(Attribute $attribute)
@@ -423,7 +429,7 @@ class Biwak
     }
 
     /**
-     * Get descriptions
+     * Get attribute
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getAttributes()
@@ -523,6 +529,36 @@ class Biwak
     {
         $this->user = $user;
         return $this;
+    }
+
+
+    /**
+     * Add image
+     * @param Image $image
+     * @return Biwak
+     */
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+        return $this;
+    }
+
+    /**
+     * Remove image
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 
 

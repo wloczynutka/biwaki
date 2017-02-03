@@ -12,7 +12,7 @@ class MiejscowkiZaFreeController extends Import
 
     public function import()
     {
-        $user = $this->buildUser();
+        $user = $this->buildUser(1);
         $url = 'https://www.google.com/maps/d/kml?mid=1PuuoCIuVYPjsQD3-JoyBlv4FWSM&forcekml=1';
         $xmlDoc = simplexml_load_file($url, null, LIBXML_NOCDATA);
         $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::MIEJSCOWKI_ZA_FREE);
@@ -102,15 +102,6 @@ class MiejscowkiZaFreeController extends Import
         }
 
         return $innerHTML;
-    }
-
-    /**
-     * @return  \BiwakiBundle\Entity\User
-     */
-    private function buildUser()
-    {
-        $user = $this->entityManager->getRepository('BiwakiBundle:User')->findOneById(1);
-        return $user;
     }
 
 }

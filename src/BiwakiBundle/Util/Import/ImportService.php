@@ -30,20 +30,8 @@ class ImportService
     public function importPlaces()
     {
 
-
-//                  $repository = $this->getDoctrine()
-//                ->getRepository('BiwakiBundle:Place');
-//        $query = $repository->createQueryBuilder('p.originId')
-//                ->where('p.source = :source')
-//                ->setParameter('source', PlacesDataSources::NATIVE)
-//                ->getQuery();
-//
-//        $places = $query->getResult();
-//
-//        ddd($places);
-
-
-        $mzf = new MiejscowkiZaFreeController($this->entityManager);
+//        $mzf = new MiejscowkiZaFreeController($this->entityManager);
+        $mzf = new GrupaBiwakowaFbController($this->entityManager);
         $mzf->import();
         
 //        $this->importPark4nightPlace();
