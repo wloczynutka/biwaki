@@ -55,9 +55,13 @@ class Import
         $dstElevationApiUrl = "http://www.datasciencetoolkit.org/coordinates2politics/$latitude,$longitude";
 
         $response = $this->connectToExternalApi($dstElevationApiUrl);
+
+        if($response[0]->politics === null){
+            return;
+        }
+
         foreach ($response[0]->politics as $position) {
             $this->parsePolitics($place, $position);
-
         }
     }
 
@@ -85,6 +89,8 @@ class Import
     private function parseCountryCode($countryName)
     {
         switch ($countryName) {
+            case 'Belarus':
+                return 'BY';
             case 'Czech Republic':
                 return 'CZ';
             case 'Germany':
@@ -97,6 +103,8 @@ class Import
                 return 'RU';
             case 'Slovakia':
                 return 'SK';
+            case 'Ukraine':
+                return 'UA';
 
             default:
                 ddd('nieznany kraj:', $countryName);

@@ -71,15 +71,14 @@ class MiejscowkiZaFreeController extends Import
 
     private function extractNameAndDescription($urlDesc)
     {
-        if((string) $urlDesc == ''){
+        $urlDesc = str_replace('http:', 'https:',(string) $urlDesc);
+        if((string) $urlDesc == '' || !($html = @file_get_contents($urlDesc)) ){
             return [
                 'name' => '(unknown)',
                 'description' => '(none)',
             ];
         }
-        $urlDesc = str_replace('http:', 'https:',(string) $urlDesc);
 
-        $html = file_get_contents($urlDesc);
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML($html);
