@@ -110,4 +110,22 @@ class Import
                 ddd('nieznany kraj:', $countryName);
         }
     }
+
+    protected function loadPlacesAlreadyInDb($placesDataSources)
+    {
+        $repository = $this->entityManager->getRepository('BiwakiBundle:Biwak');
+        $query = $repository->createQueryBuilder('p')
+            ->where('p.source = :source')
+            ->setParameter('source', $placesDataSources)
+            ->getQuery();
+
+        $places = $query->getResult();
+        $biwakiOriginalId = [];
+        /* @var $biwak \BiwakiBundle\Entity\Biwak */
+        foreach ($places as $biwak){
+            $biwakiOriginalId[] = $biwak->getOriginId();
+        }
+        return $biwakiOriginalId;
+    }
+
 }

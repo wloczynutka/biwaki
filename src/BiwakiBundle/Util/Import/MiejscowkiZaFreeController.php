@@ -15,7 +15,7 @@ class MiejscowkiZaFreeController extends Import
         $user = $this->buildUser();
         $url = 'https://www.google.com/maps/d/kml?mid=1PuuoCIuVYPjsQD3-JoyBlv4FWSM&forcekml=1';
         $xmlDoc = simplexml_load_file($url, null, LIBXML_NOCDATA);
-        $placesAlreadyInDb = $this->loadPlacesAlreadyInDb();
+        $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::MIEJSCOWKI_ZA_FREE);
         $importedItemsCount = 0;
         foreach ($xmlDoc->Document->Folder->Placemark as $placeRow) {
             $originalId = (string) $placeRow->name;
@@ -51,22 +51,6 @@ class MiejscowkiZaFreeController extends Import
         }
 
         return $importedItemsCount;
-    }
-
-    private function loadPlacesAlreadyInDb()
-    {
-        $repository = $this->entityManager->getRepository('BiwakiBundle:Biwak');
-        $query = $repository->createQueryBuilder('p')
-                ->where('p.source = :source')
-                ->setParameter('source', PlacesDataSources::MIEJSCOWKI_ZA_FREE)
-                ->getQuery();
-
-        $places = $query->getResult();
-        /* @var $biwak \BiwakiBundle\Entity\Biwak */
-        foreach ($places as $biwak){
-            $biwakiOriginalId[] = $biwak->getOriginId();
-        }
-        return $biwakiOriginalId;
     }
 
     private function extractNameAndDescription($urlDesc)
