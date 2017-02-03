@@ -48,7 +48,7 @@ class Biwak
 
     /**
      * @var string
-     * @ORM\Column(name="country", type="string", length=2)
+     * @ORM\Column(name="country", type="string", length=2, nullable=true)
      */
     private $country;
 
