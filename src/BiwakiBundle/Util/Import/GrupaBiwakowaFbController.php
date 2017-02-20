@@ -61,6 +61,9 @@ class GrupaBiwakowaFbController extends Import
 
     private function extractAndAddImages($placeRow, Biwak $biwak)
     {
+        if(!isset($placeRow->ExtendedData->Data->value)){
+            return;
+        }
         $imgLinksArray = explode(' ', $placeRow->ExtendedData->Data->value);
         foreach ($imgLinksArray as $imgLink){
             $image = new Image();
