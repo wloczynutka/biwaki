@@ -47,7 +47,7 @@ class Biwak
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="biwakId")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="biwak")
      */
     private $images;
 
