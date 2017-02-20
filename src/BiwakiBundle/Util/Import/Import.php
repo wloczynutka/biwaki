@@ -44,6 +44,9 @@ class Import
         if(is_object($statisticObj) && isset($statisticObj->statistics->elevation->value)){
             $altitude = $statisticObj->statistics->elevation->value;
             $place->setAltitude($altitude);
+        } else {
+            $place->setAltitude(-9999);
+
         }
     }
 
@@ -53,7 +56,6 @@ class Import
         $longitude = $place->getLongitude();
 
         $dstElevationApiUrl = "http://www.datasciencetoolkit.org/coordinates2politics/$latitude,$longitude";
-
         $response = $this->connectToExternalApi($dstElevationApiUrl);
 
         if($response[0]->politics === null){
@@ -81,7 +83,7 @@ class Import
                 $place->setRegion((string) $position->code);
                 break;
             default:
-                ddd($position);
+//                ddd($position);
                 break;
         }
     }
@@ -89,18 +91,45 @@ class Import
     private function parseCountryCode($countryName)
     {
         switch ($countryName) {
+            case 'Albania':
+                return 'AL';
             case 'Belarus':
                 return 'BY';
+            case 'Bulgaria':
+                return 'BG';
             case 'Bosnia and Herzegovina':
                 return 'BA';
             case 'Croatia':
                 return 'HR';
             case 'Czech Republic':
                 return 'CZ';
+            case 'Egypt':
+                return 'EG';
+            case 'England':
+                return 'GB';
+            case 'Estonia':
+                return 'EE';
+            case 'Finland':
+                return 'FI';
+            case 'France':
+                return 'FR';
+            case 'Hungary':
+                return 'HU';
             case 'Germany':
                 return 'DE';
+            case 'Israel':
+                return 'IL';
+            case 'Jordan':
+                return 'JO';
+            case 'Latvia':
+                return 'LV';
             case 'Lithuania':
                 return 'LT';
+            case 'Montenegro':
+            case 'Serbia':
+                return 'CS';
+            case 'Norway':
+                return 'NO';
             case 'Poland':
                 return 'PL';
             case 'Romania':
@@ -109,9 +138,10 @@ class Import
                 return 'RU';
             case 'Slovakia':
                 return 'SK';
+            case 'Sweden':
+                return 'SE';
             case 'Ukraine':
                 return 'UA';
-
             default:
                 ddd('nieznany kraj:', $countryName);
         }
@@ -141,6 +171,16 @@ class Import
     {
         $user = $this->entityManager->getRepository('BiwakiBundle:User')->findOneById($userId);
         return $user;
+    }
+
+    protected function loadBiwakAlreadyInDbAtGivenCoordinatesOrCreateNew($lat, $lon)
+    {
+        $biwakAlreadyInDb = $this->entityManager->getRepository('BiwakiBundle:Biwak')->findOneBy(['latitude' => $lat, 'longitude' => $lon]);
+        if($biwakAlreadyInDb === null){
+            return new Biwak();
+        } else {
+            return $biwakAlreadyInDb;
+        }
     }
 
 

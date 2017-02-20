@@ -18,7 +18,7 @@ class GrupaBiwakowaFbController extends Import
         $xmlDoc = simplexml_load_file(__DIR__.'/GrupaBiwakowa.kml', null, LIBXML_NOCDATA);
         $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::GRUPA_BIWAKOWA_FB);
         foreach ($xmlDoc->Document->Folder as $folder) {
-            if($folder->name == 'Sprawdzone, darmowe miejsca biwakowe'){
+            if($folder->name == 'Miejsca biwakowe'){
                 $this->processPlacemarks($folder->Placemark, $placesAlreadyInDb, $user);
             }
         }
@@ -28,13 +28,13 @@ class GrupaBiwakowaFbController extends Import
     private function processPlacemarks($placemarks, $placesAlreadyInDb, User $user)
     {
         foreach ($placemarks as $placeRow) {
-            $biwak = new Biwak();
-            $this->extractAndAddImages($placeRow, $biwak);
             $originalId = (string) $placeRow->Point->coordinates;
             if (in_array($originalId, $placesAlreadyInDb)) {
                 continue;
             }
             $cordsArr = explode(',', $placeRow->Point->coordinates);
+            $biwak = $this->loadBiwakAlreadyInDbAtGivenCoordinatesOrCreateNew($cordsArr[1], $cordsArr[0]);
+            $this->extractAndAddImages($placeRow, $biwak);
             $description = new Description();
             $description
                 ->setLanguage('PL')
@@ -50,13 +50,9 @@ class GrupaBiwakowaFbController extends Import
                 ->setName((string) $placeRow->name)
                 ->addDescription($description)
                 ->setType(0)
-                ->setLatitude($cordsArr[1])
-                ->setLongitude($cordsArr[0]);
+                ->setLatitude((float) trim($cordsArr[1]))
+                ->setLongitude((float) trim($cordsArr[0]));
             $this->retreiveGeoData($biwak);
-
-            d($biwak);
-
-
             $this->entityManager->persist($biwak);
             $this->entityManager->persist($description);
             $this->entityManager->flush();
