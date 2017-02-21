@@ -27,14 +27,18 @@ class ImportService
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return ImportResult
+     */
     public function importPlaces()
     {
-
 //        $mzf = new MiejscowkiZaFreeController($this->entityManager);
-        $mzf = new GrupaBiwakowaFbController($this->entityManager);
-        $mzf->import();
-        
 //        $this->importPark4nightPlace();
+        $mzf = new GrupaBiwakowaFbController($this->entityManager);
+        $importResult = $mzf->import();
+
+        return $importResult;
+
     }
 
     private function importPark4nightPlace()

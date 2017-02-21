@@ -93,6 +93,12 @@ class Import
         switch ($countryName) {
             case 'Albania':
                 return 'AL';
+            case 'Armenia':
+                return 'AM';
+            case 'Austria':
+                return 'AT';
+            case 'Azerbaijan':
+                return 'AZ';
             case 'Belarus':
                 return 'BY';
             case 'Bulgaria':
@@ -103,6 +109,8 @@ class Import
                 return 'HR';
             case 'Czech Republic':
                 return 'CZ';
+            case 'Denmark':
+                return 'DK';
             case 'Egypt':
                 return 'EG';
             case 'England':
@@ -115,10 +123,16 @@ class Import
                 return 'FR';
             case 'Hungary':
                 return 'HU';
+            case 'Georgia':
+                return 'GE';
             case 'Germany':
                 return 'DE';
+            case 'Greece':
+                return 'GR';
             case 'Israel':
                 return 'IL';
+            case 'Italy':
+                return 'IT';
             case 'Jordan':
                 return 'JO';
             case 'Latvia':
@@ -128,18 +142,26 @@ class Import
             case 'Montenegro':
             case 'Serbia':
                 return 'CS';
+            case 'Netherlands':
+                return 'NL';
             case 'Norway':
                 return 'NO';
             case 'Poland':
                 return 'PL';
+            case 'Portugal':
+                return 'PT';
             case 'Romania':
                 return 'RO';
             case 'Russia':
                 return 'RU';
             case 'Slovakia':
                 return 'SK';
+            case 'Spain':
+                return 'ES';
             case 'Sweden':
                 return 'SE';
+            case 'The former Yugoslav Republic of Macedonia':
+                return 'MK';
             case 'Ukraine':
                 return 'UA';
             default:

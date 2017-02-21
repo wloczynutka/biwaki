@@ -15,9 +15,9 @@ class ImportController extends Controller
         /* @var $importService \BiwakiBundle\Util\Import\ImportService */
         $importService = $this->get('import_service');
 
-        $importedPlaces = $importService->importPlaces();
+        $importResult = $importService->importPlaces();
 
-        ddd($importedPlaces);
+        ddd($importResult);
 
     }
 
