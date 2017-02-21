@@ -36,8 +36,8 @@ class Biwak
     private $source;
 
     /**
-     * @var integer
-     * @ORM\Column(name="origin_id", type="string")
+     * @var string
+     * @ORM\Column(name="origin_id", type="string", nullable=true)
      */
     private $originId;
 
