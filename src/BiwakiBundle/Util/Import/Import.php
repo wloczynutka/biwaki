@@ -160,6 +160,8 @@ class Import
                 return 'ES';
             case 'Sweden':
                 return 'SE';
+            case 'Switzerland':
+                return 'CH';
             case 'The former Yugoslav Republic of Macedonia':
                 return 'MK';
             case 'Ukraine':
