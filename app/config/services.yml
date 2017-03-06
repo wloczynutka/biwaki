@@ -5,3 +5,6 @@ services:
     import_service:
         class: BiwakiBundle\Util\Import\ImportService
         arguments: ["@doctrine.orm.entity_manager"]
+    core_service:
+        class: BiwakiBundle\Util\Core\CoreService
+        arguments: ["@doctrine.orm.entity_manager"]
