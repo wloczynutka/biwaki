@@ -3,8 +3,9 @@
 namespace BiwakiBundle\Util\Core;
 
 use BiwakiBundle\Entity\User;
+
 /**
- * Description of BiwakiFilters
+ * Filters to be used while query database
  *
  * @author Łza
  */
