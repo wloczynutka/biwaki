@@ -27,26 +27,19 @@ class ImportService
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return ImportResult
+     */
     public function importPlaces()
     {
-
-
-//                  $repository = $this->getDoctrine()
-//                ->getRepository('BiwakiBundle:Place');
-//        $query = $repository->createQueryBuilder('p.originId')
-//                ->where('p.source = :source')
-//                ->setParameter('source', PlacesDataSources::NATIVE)
-//                ->getQuery();
-//
-//        $places = $query->getResult();
-//
-//        ddd($places);
-
-
-        $mzf = new MiejscowkiZaFreeController($this->entityManager);
-        $mzf->import();
-        
+//        $mzf = new MiejscowkiZaFreeController($this->entityManager);
 //        $this->importPark4nightPlace();
+//        $mzf = new GrupaBiwakowaFbController($this->entityManager);
+        $mzf = new GpxController($this->entityManager);
+        $importResult = $mzf->import();
+
+        return $importResult;
+
     }
 
     private function importPark4nightPlace()

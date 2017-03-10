@@ -12,10 +12,10 @@ class MiejscowkiZaFreeController extends Import
 
     public function import()
     {
-        $user = $this->buildUser();
+        $user = $this->buildUser(1);
         $url = 'https://www.google.com/maps/d/kml?mid=1PuuoCIuVYPjsQD3-JoyBlv4FWSM&forcekml=1';
         $xmlDoc = simplexml_load_file($url, null, LIBXML_NOCDATA);
-        $placesAlreadyInDb = $this->loadPlacesAlreadyInDb();
+        $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::MIEJSCOWKI_ZA_FREE);
         $importedItemsCount = 0;
         foreach ($xmlDoc->Document->Folder->Placemark as $placeRow) {
             $originalId = (string) $placeRow->name;
@@ -53,33 +53,16 @@ class MiejscowkiZaFreeController extends Import
         return $importedItemsCount;
     }
 
-    private function loadPlacesAlreadyInDb()
-    {
-        $repository = $this->entityManager->getRepository('BiwakiBundle:Biwak');
-        $query = $repository->createQueryBuilder('p')
-                ->where('p.source = :source')
-                ->setParameter('source', PlacesDataSources::MIEJSCOWKI_ZA_FREE)
-                ->getQuery();
-
-        $places = $query->getResult();
-        /* @var $biwak \BiwakiBundle\Entity\Biwak */
-        foreach ($places as $biwak){
-            $biwakiOriginalId[] = $biwak->getOriginId();
-        }
-        return $biwakiOriginalId;
-    }
-
     private function extractNameAndDescription($urlDesc)
     {
-        if((string) $urlDesc == ''){
+        $urlDesc = str_replace('http:', 'https:',(string) $urlDesc);
+        if((string) $urlDesc == '' || !($html = @file_get_contents($urlDesc)) ){
             return [
                 'name' => '(unknown)',
                 'description' => '(none)',
             ];
         }
-        $urlDesc = str_replace('http:', 'https:',(string) $urlDesc);
 
-        $html = file_get_contents($urlDesc);
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML($html);
@@ -119,15 +102,6 @@ class MiejscowkiZaFreeController extends Import
         }
 
         return $innerHTML;
-    }
-
-    /**
-     * @return  \BiwakiBundle\Entity\User
-     */
-    private function buildUser()
-    {
-        $user = $this->entityManager->getRepository('BiwakiBundle:User')->findOneById(1);
-        return $user;
     }
 
 }
