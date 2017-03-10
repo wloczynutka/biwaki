@@ -2,13 +2,6 @@ biwaki_main:
     path: /
     defaults: { _controller: BiwakiBundle:Biwaki:index }
 
-biwaki_login:
-    path: /{_locale}/biwaki/login
-    defaults: { _controller: BiwakiBundle:User:login }
-
 biwaki_import:
     path: /{_locale}/biwaki/import
     defaults: { _controller: BiwakiBundle:Import:import }
-
-
-
