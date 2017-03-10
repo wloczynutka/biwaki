@@ -33,7 +33,7 @@ class Import
     /**
      * Retreive altitude from DataScienceToolkit Api, set $this->altitude and store it in db.
      */
-    private function retreiveAltitudeFromDataScienceToolkit(Biwak $place)
+    public function retreiveAltitudeFromDataScienceToolkit(Biwak $place)
     {
         $latitude = $place->getLatitude();
         $longitude = $place->getLongitude();

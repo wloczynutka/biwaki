@@ -4,6 +4,7 @@ namespace BiwakiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use BiwakiBundle\Entity\User;
 
 /**
@@ -11,6 +12,7 @@ use BiwakiBundle\Entity\User;
  *
  * @ORM\Table(name="biwaki_biwak")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Biwak
 {
@@ -561,6 +563,16 @@ class Biwak
         return $this->images;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if($this->dateCreated === null){
+            $this->dateCreated = new \DateTime();
+        }
+        $this->lastUpdate = new \DateTime();
+    }
 
 
 }
