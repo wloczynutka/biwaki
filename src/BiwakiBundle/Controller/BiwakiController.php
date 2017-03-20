@@ -2,9 +2,11 @@
 
 namespace BiwakiBundle\Controller;
 
+use BiwakiBundle\BiwakiBundle;
 use BiwakiBundle\Entity\Biwak;
 use BiwakiBundle\Form\BiwakType;
 use BiwakiBundle\Resources\PlacesDataSources;
+use BiwakiBundle\Util\Core\CoreService;
 use BiwakiBundle\Util\Import\Import;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,7 +63,22 @@ class BiwakiController extends Controller
 
     public function showAction($biwakId, Request $request)
     {
-        ddd($biwakId);
+        /* @var $coreService CoreService */
+        $coreService = $this->get('core_service');
+        $biwak = $coreService->getBiwak($biwakId);
+
+
+       $biwak->getDescriptions()->initialize();
+
+
+        $templateVars = [
+            'biwak' => $biwak,
+            'googleMapApiKey' => $this->container->getParameter('googleMapApiKey'),
+        ];
+
+        d($templateVars);
+
+        return $this->render('BiwakiBundle:Default:showbiwak.html.twig', $templateVars);
     }
 
     public function importAction($param)
@@ -76,11 +93,11 @@ class BiwakiController extends Controller
         $im = new Import();
         $im->retreiveAltitudeFromDataScienceToolkit($biwak);
 
-        ddd($biwak)
+        ddd($biwak);
 
         /* @var $importService \BiwakiBundle\Util\Import\ImportService */
         $importService = $this->get('import_service');
-        $importService
+//        $importService->
     }
 
 }
