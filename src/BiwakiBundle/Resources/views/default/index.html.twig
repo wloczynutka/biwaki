@@ -12,6 +12,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" media="all">
     <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
 	{% block javascripts %}{% endblock %}
+    <style>
+        #map {
+            height: 500px;
+            width: 1000px;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     {{ app.user.username }}
                 {% else %}
                    {% trans %}User is not logged in. Some features are disabled{% endtrans %}.
-                   <a href="{{ url('biwaki_login') }}">{% trans %}Please log-in{% endtrans %}</a>
+                   {#<a href="{{ url('biwaki_login') }}">{% trans %}Please log-in{% endtrans %}</a>#}
                 {% endif %}
             </div>
 		</div>
@@ -36,11 +42,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </ul>
     </div>
 
+    <div id="map"></div>
+
+    {% for biwak in biwaki %}
+        <a href="{{ path('biwaki_show_biwak', {'biwakId': biwak.id}  ) }}">{{ biwak.name }}<br>
+    {% endfor %}
+
     {% block content %}{% endblock %}
 
 
     <div class="container">
         <p>Copyright © 2017 Włóczynutka. All rights reserved</p>
     </div>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: {lat: 50, lng: 20 }
+            });
+
+            {% for biwak in biwaki %}
+                var marker = new google.maps.Marker({
+                    position:  {lat: {{ biwak.latitude }}, lng: {{ biwak.longitude }} },
+                    map: map
+                });
+            {% endfor %}
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}&callback=initMap"></script>
+
 </body>
 </html>

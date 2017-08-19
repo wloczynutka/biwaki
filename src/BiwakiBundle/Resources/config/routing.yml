@@ -5,3 +5,12 @@ biwaki_main:
 biwaki_import:
     path: /{_locale}/biwaki/import
     defaults: { _controller: BiwakiBundle:Import:import }
+
+biwaki_add_biwak:
+    path: /{_locale}/biwaki/add
+    defaults: { _controller: BiwakiBundle:Biwaki:add }
+
+biwaki_show_biwak:
+    path: /{_locale}/biwaki/show/{biwakId}
+    defaults: { _controller: BiwakiBundle:Biwaki:show }
+

@@ -17,6 +17,7 @@ class GrupaBiwakowaFbController extends Import
      */
     public function import()
     {
+        set_time_limit(600);
         $importResult = new ImportResult();
         $user = $this->buildUser(2);
         $xmlDoc = simplexml_load_file(__DIR__.'/GrupaBiwakowa.kml', null, LIBXML_NOCDATA);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+<h3>{{ biwak.name }}</h3>
+<div id="map"></div>
+
+
+<p>{{ biwak.id }}</p>
+<p>{{ biwak.latitude }}</p>
+<p>{{ biwak.longitude }}</p>
+
+{% for description in biwak.descriptions %}
+    {{ description.text }}
+{% endfor %}
+<br><br>
+{% for image in biwak.images %}
+    <img src="{{ image.link }}"><br/>
+{% endfor %}
+
+<script>
+    function initMap() {
+        var uluru = {lat: {{ biwak.latitude }}, lng: {{ biwak.longitude }} };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}&callback=initMap"></script>
+</body>
+</html>
+

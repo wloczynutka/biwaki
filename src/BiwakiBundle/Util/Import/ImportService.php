@@ -32,10 +32,12 @@ class ImportService
      */
     public function importPlaces()
     {
+
+
 //        $mzf = new MiejscowkiZaFreeController($this->entityManager);
 //        $this->importPark4nightPlace();
-//        $mzf = new GrupaBiwakowaFbController($this->entityManager);
-        $mzf = new GpxController($this->entityManager);
+        $mzf = new GrupaBiwakowaFbController($this->entityManager);
+//        $mzf = new GpxController($this->entityManager);
         $importResult = $mzf->import();
 
         return $importResult;

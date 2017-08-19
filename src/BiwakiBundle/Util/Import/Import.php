@@ -33,7 +33,7 @@ class Import
     /**
      * Retreive altitude from DataScienceToolkit Api, set $this->altitude and store it in db.
      */
-    private function retreiveAltitudeFromDataScienceToolkit(Biwak $place)
+    public function retreiveAltitudeFromDataScienceToolkit(Biwak $place)
     {
         $latitude = $place->getLatitude();
         $longitude = $place->getLongitude();
@@ -166,6 +166,18 @@ class Import
                 return 'MK';
             case 'Ukraine':
                 return 'UA';
+            case 'Western Sahara';
+                return 'EH';
+            case 'Morocco';
+                return 'MA';
+            case 'Republic of Moldova';
+                return 'MD';
+            case 'Slovenia';
+                return 'SI';
+            case 'Belgium';
+                return 'BE';
+            case 'Ireland';
+                return 'IE';
             default:
                 ddd('nieznany kraj:', $countryName);
         }
