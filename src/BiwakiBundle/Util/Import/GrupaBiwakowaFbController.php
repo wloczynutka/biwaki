@@ -34,6 +34,34 @@ class GrupaBiwakowaFbController extends Import
     {
         $strangeChar = file_get_contents(__DIR__.'/strangeChar.txt');
         foreach ($placemarks as $placeRow) {
+            switch ($placeRow->styleUrl->__toString() ) {
+                case '#icon-1650-F9A825':
+                case '#icon-1650-0288D1':
+                case '#icon-1542-F9A825':
+                   $biwakType = $this->biwakTypes[1];
+                   break;
+                case '#icon-1542-0288D1':
+                case '#icon-1763-0288D1':
+                case '#icon-1763-F9A825':
+                   $biwakType = $this->biwakTypes[2];
+                   break;
+                case '#icon-1754-7CB342':
+                   $biwakType = $this->biwakTypes[3];
+                   break;
+                case '#icon-1512-673AB7':
+                   $biwakType = $this->biwakTypes[4];
+                   break;
+                case '#icon-1644-795548':
+                   $biwakType = $this->biwakTypes[5];
+                   break;
+                case '#icon-1603-0288D1':
+                   $biwakType = $this->biwakTypes[6];
+                   break;
+                default:
+                    ddd($placeRow->styleUrl->__toString(), $placeRow);
+            }
+
+
             $originalId = (string) $placeRow->Point->coordinates;
             if (in_array($originalId, $placesAlreadyInDb)) {
                 continue;
@@ -60,7 +88,7 @@ class GrupaBiwakowaFbController extends Import
                 ->setOriginId($originalId)
                 ->setName((string) $placeRow->name)
                 ->addDescription($description)
-                ->setType(0)
+                ->setType($biwakType)
                 ->setLatitude((float) trim($cordsArr[1]))
                 ->setLongitude((float) trim($cordsArr[0]));
             $this->retreiveGeoData($biwak);

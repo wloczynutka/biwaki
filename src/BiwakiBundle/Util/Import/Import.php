@@ -18,10 +18,15 @@ class Import
      */
     protected $entityManager;
 
+    protected $biwakTypes;
+
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-
+        $biwakTypesRaw = $this->entityManager->getRepository('BiwakiBundle:BiwakType')->findAll();
+        foreach ($biwakTypesRaw as $biwakType) {
+            $this->biwakTypes[$biwakType->getId()] = $biwakType;
+        }
     }
 
     protected function retreiveGeoData(Biwak $place)

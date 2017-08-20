@@ -80,8 +80,9 @@ class Biwak
     private $user;
 
     /**
-     * @var integer
-     * @ORM\Column(name="type", type="integer")
+     * @var BiwakType
+     * @ORM\OneToOne(targetEntity="BiwakType")
+     * @ORM\JoinColumn(name="type", referencedColumnName="id")
      */
     private $type;
 
@@ -260,10 +261,10 @@ class Biwak
 
     /**
      * Set type
-     * @param integer $type
+     * @param BiwakType $type
      * @return Biwak
      */
-    public function setType($type)
+    public function setType(BiwakType $type)
     {
         $this->type = $type;
         return $this;
