@@ -45,27 +45,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div id="map"></div>
 
     {% for biwak in biwaki %}
-        <a href="{{ path('biwaki_show_biwak', {'biwakId': biwak.id}  ) }}">{{ biwak.name }}<br>
+        <img src="/icon/{{ biwak.btid }}.png" height="25"><a href="{{ path('biwaki_show_biwak', {'biwakId': biwak.id}  ) }}">{{ biwak.name }}</a><br>
     {% endfor %}
 
     {% block content %}{% endblock %}
 
 
     <div class="container">
-        <p>Copyright © 2017 Włóczynutka. All rights reserved</p>
+        <p>Copyright © 2017 Włóczynutka, Grupa Biwakowa. All rights reserved</p>
     </div>
 
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 7,
+                zoom: 5,
                 center: {lat: 50, lng: 20 }
             });
 
             {% for biwak in biwaki %}
                 var marker = new google.maps.Marker({
                     position:  {lat: {{ biwak.latitude }}, lng: {{ biwak.longitude }} },
-                    map: map
+                    map: map,
+                    icon: {
+                        url: '/icon/{{ biwak.btid }}.png',
+                        size: new google.maps.Size(48, 48),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(0, 25),
+                        scaledSize: new google.maps.Size(25, 25)
+                    }
                 });
             {% endfor %}
         }

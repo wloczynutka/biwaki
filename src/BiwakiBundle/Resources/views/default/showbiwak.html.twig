@@ -4,25 +4,33 @@
     <style>
         #map {
             height: 400px;
-            width: 400px;
+            width: 600px;
         }
     </style>
 </head>
 <body>
-<h3>{{ biwak.name }}</h3>
-<div id="map"></div>
 
 
-<p>{{ biwak.id }}</p>
-<p>{{ biwak.latitude }}</p>
-<p>{{ biwak.longitude }}</p>
+
+<table width="90%">
+    <tr>
+        <td width="30%">
+            <h3>{{ biwak.name }}</h3>
+            <p><img src="{{ biwak.type.iconUrl }}">{{ biwak.type.name }}</p>
+            <p>Współrzędne: N{{ biwak.latitude }} / E{{ biwak.longitude }}</p>
+            <p><a href="{{ biwak.linkToOriginal }}">Opis</a></p>
+        </td>
+        <td width="70%" align="right"><div id="map"></div></td>
+    </tr>
+</table>
+
 
 {% for description in biwak.descriptions %}
     {{ description.text }}
 {% endfor %}
 <br><br>
 {% for image in biwak.images %}
-    <img src="{{ image.link }}"><br/>
+    <img src="{{ image.link }}"><br/><br/>
 {% endfor %}
 
 <script>

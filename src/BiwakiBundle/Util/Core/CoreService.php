@@ -47,11 +47,12 @@ class CoreService
 
     public function getAllCoordinates()
     {
-        $fields = array('b.id', 'b.name', 'b.latitude', 'b.longitude');
+        $fields = array('b.id', 'b.name', 'b.latitude', 'b.longitude', 'bt.id as btid');
         $query = $this->entityManager->createQueryBuilder();
         $query
             ->select($fields)
-            ->from('BiwakiBundle:Biwak', 'b');
+            ->from('BiwakiBundle:Biwak', 'b')
+            ->leftjoin('b.type', 'bt');
 
 //        $query->setMaxResults(10);
         $results = $query->getQuery()->getResult();
