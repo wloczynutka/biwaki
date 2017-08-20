@@ -17,7 +17,7 @@ class GrupaBiwakowaFbController extends Import
      */
     public function import()
     {
-        set_time_limit(600);
+        set_time_limit(1200);
         $importResult = new ImportResult();
         $user = $this->buildUser(2);
         $xmlDoc = simplexml_load_file(__DIR__.'/GrupaBiwakowa.kml', null, LIBXML_NOCDATA);
@@ -32,13 +32,19 @@ class GrupaBiwakowaFbController extends Import
 
     private function processPlacemarks($placemarks, $placesAlreadyInDb, User $user, ImportResult $importResult)
     {
+        $strangeChar = file_get_contents(__DIR__.'/strangeChar.txt');
         foreach ($placemarks as $placeRow) {
             $originalId = (string) $placeRow->Point->coordinates;
             if (in_array($originalId, $placesAlreadyInDb)) {
                 continue;
             }
+            $placeRow->description = str_replace($strangeChar, ' ', $placeRow->description);
+            preg_match_all('#\bhttp://grupabiwakowa.pl/[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $placeRow->description, $match);
             $cordsArr = explode(',', $placeRow->Point->coordinates);
             $biwak = $this->loadBiwakAlreadyInDbAtGivenCoordinatesOrCreateNew($cordsArr[1], $cordsArr[0]);
+            if (isset($match[0][0])) {
+                $biwak->setLinkToOriginal($match[0][0]);
+            }
             $this->extractAndAddImages($placeRow, $biwak);
             $description = new Description();
             $description
