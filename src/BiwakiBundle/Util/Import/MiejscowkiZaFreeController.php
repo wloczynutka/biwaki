@@ -12,11 +12,15 @@ class MiejscowkiZaFreeController extends Import
 
     public function import()
     {
+
+        ini_set('max_execution_time', 300);
+
         $user = $this->buildUser(1);
         $url = 'https://www.google.com/maps/d/kml?mid=1PuuoCIuVYPjsQD3-JoyBlv4FWSM&forcekml=1';
         $xmlDoc = simplexml_load_file($url, null, LIBXML_NOCDATA);
         $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::MIEJSCOWKI_ZA_FREE);
         $importedItemsCount = 0;
+        $biwakType = $this->entityManager->find('BiwakiBundle:BiwakType', 2);
         foreach ($xmlDoc->Document->Folder->Placemark as $placeRow) {
             $originalId = (string) $placeRow->name;
             if(in_array($originalId, $placesAlreadyInDb)){
@@ -38,7 +42,7 @@ class MiejscowkiZaFreeController extends Import
                 ->setOriginId($originalId)
                 ->setName($nameAndDescription['name'])
                 ->addDescription($description)
-                ->setType(0)
+                ->setType($biwakType)
                 ->setLinkToOriginal((string) $placeRow->description)
                 ->setLatitude($cordsArr[1])
                 ->setLongitude($cordsArr[0]);
@@ -79,7 +83,8 @@ class MiejscowkiZaFreeController extends Import
         $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
         $rawDesc = trim(preg_replace('/\t+/', '', strip_tags($a = $this->dOMinnerHTML($nodes->item(0)))));
         $rawDescArr = explode("''E", $rawDesc);
-        return trim($rawDescArr[1]);
+        $rawDescArr2 = explode('});', $rawDescArr[1]);
+        return trim($rawDescArr2[1]);
     }
 
     private function extractName($dom)

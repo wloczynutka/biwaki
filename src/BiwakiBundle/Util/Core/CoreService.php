@@ -54,7 +54,6 @@ class CoreService
             ->from('BiwakiBundle:Biwak', 'b')
             ->leftjoin('b.type', 'bt');
 
-//        $query->setMaxResults(10);
         $results = $query->getQuery()->getResult();
         return $results;
     }
