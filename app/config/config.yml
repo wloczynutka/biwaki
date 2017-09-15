@@ -74,4 +74,7 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: BiwakiBundle\Entity\User
+    from_email:
+            address: wloczynutka@gmail.com
+            sender_name: Lza
     

@@ -23,7 +23,7 @@ class Comment
      * @ORM\ManyToOne(targetEntity="Biwak", inversedBy="comments")
      * @ORM\JoinColumn(name="biwak_id", referencedColumnName="id")
      */
-    private $biwakId;
+    private $biwak;
 
     /**
      * @ORM\Column(type="datetime", name="date_created")
@@ -128,6 +128,24 @@ class Comment
     public function setText($text)
     {
         $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBiwak()
+    {
+        return $this->biwak;
+    }
+
+    /**
+     * @param mixed $biwak
+     * @return Comment
+     */
+    public function setBiwak($biwak)
+    {
+        $this->biwak = $biwak;
         return $this;
     }
 

@@ -183,6 +183,8 @@ class Import
                 return 'BE';
             case 'Ireland';
                 return 'IE';
+            case 'United States';
+                return 'US';
             default:
                 ddd('nieznany kraj:', $countryName);
         }

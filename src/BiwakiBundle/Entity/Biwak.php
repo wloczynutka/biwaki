@@ -118,12 +118,12 @@ class Biwak
     private $region;
 
     /**
-     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="biwakId")
+     * @ORM\OneToMany(targetEntity="Attribute", mappedBy="biwak")
      */
     private $attributes;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="biwakId")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="biwak")
      */
     private $comments;
 
