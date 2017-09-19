@@ -98,6 +98,10 @@ class Import
         switch ($countryName) {
             case 'Albania':
                 return 'AL';
+            case 'Algeria':
+                return 'DZ';
+            case 'Andorra':
+                return 'AD';
             case 'Armenia':
                 return 'AM';
             case 'Austria':
@@ -144,11 +148,15 @@ class Import
                 return 'LV';
             case 'Lithuania':
                 return 'LT';
+            case 'Luxembourg':
+                return 'LU';
             case 'Montenegro':
             case 'Serbia':
                 return 'CS';
             case 'Netherlands':
                 return 'NL';
+            case 'New Caledonia':
+                return 'NC';
             case 'Norway':
                 return 'NO';
             case 'Poland':

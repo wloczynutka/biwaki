@@ -15,21 +15,21 @@ class Park4nightController extends Import
     public function import()
     {
 
-        ini_set('max_execution_time', 600);
+        ini_set('max_execution_time', 7000);
 
         $placesAlreadyInDb = $this->loadPlacesAlreadyInDb(PlacesDataSources::PARK4NIGHT);
 
         d($placesAlreadyInDb);
         $user = $this->buildUser(3);
-        $placeId = 201;
-        $to = 400;
+        $placeId = 4000;
+        $to = 20000;
         while ($placeId <= $to) {
             if(in_array($placeId, $placesAlreadyInDb)){
                 $placeId++;
                 continue;
             }
             $this->importPlace($placeId, $user);
-            sleep(5);
+            sleep(1);
             $placeId++;
         }
         return 'last place id: '. $placeId;
