@@ -21,8 +21,8 @@ class Park4nightController extends Import
 
         d($placesAlreadyInDb);
         $user = $this->buildUser(3);
-        $placeId = 4000;
-        $to = 20000;
+        $placeId = 9306;
+        $to = 60000;
         while ($placeId <= $to) {
             if(in_array($placeId, $placesAlreadyInDb)){
                 $placeId++;
@@ -40,7 +40,12 @@ class Park4nightController extends Import
         $url = "http://park4night.com/lieu/$originId////";
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
-        $dom->loadHTMLFile($url);
+
+        $html = @file_get_contents($url);
+        if ($html === false) {
+            return;
+        }
+        $dom->loadHTML($html);
         $finder = new \DomXPath($dom);
         $headerNodes = $finder->query("//*[contains(@class, 'header_4')]");
         $type = $this->parseTypeByImage($headerNodes[0]->getElementsByTagName('img')->item(0)->getAttribute('src'));

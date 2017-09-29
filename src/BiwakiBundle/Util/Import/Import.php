@@ -44,7 +44,7 @@ class Import
         $longitude = $place->getLongitude();
 
         $dstElevationApiUrl = "http://www.datasciencetoolkit.org/coordinates2statistics/$latitude,$longitude?statistics=elevation";
-        $response = $this->connectToExternalApi($dstElevationApiUrl);
+        $response = $this->connectToExternalApi($dstElevationApiUrl, 0);
         $statisticObj = $response[0];
         if(is_object($statisticObj) && isset($statisticObj->statistics->elevation->value)){
             $altitude = $statisticObj->statistics->elevation->value;
@@ -61,7 +61,7 @@ class Import
         $longitude = $place->getLongitude();
 
         $dstElevationApiUrl = "http://www.datasciencetoolkit.org/coordinates2politics/$latitude,$longitude";
-        $response = $this->connectToExternalApi($dstElevationApiUrl);
+        $response = $this->connectToExternalApi($dstElevationApiUrl, 0);
 
         if($response[0]->politics === null){
             return;
@@ -72,9 +72,19 @@ class Import
         }
     }
 
-    private function connectToExternalApi($url)
+    private function connectToExternalApi($url, $attempt)
     {
-        $response = json_decode(file_get_contents($url));
+        $attempt++;
+        if ($attempt > 10) {
+            return [];
+        }
+        $json = @file_get_contents($url);
+        if ($json === false) {
+            sleep(2);
+            return $this->connectToExternalApi($url, $attempt);
+        }
+
+        $response = json_decode($json);
         return $response;
     }
 
@@ -96,6 +106,8 @@ class Import
     private function parseCountryCode($countryName)
     {
         switch ($countryName) {
+			case 'Afghanistan':
+				return 'AF';
             case 'Albania':
                 return 'AL';
             case 'Algeria':
@@ -138,7 +150,9 @@ class Import
                 return 'DE';
             case 'Greece':
                 return 'GR';
-            case 'Israel':
+            case 'Iceland':
+                return 'IS';
+			case 'Israel':
                 return 'IL';
             case 'Italy':
                 return 'IT';
@@ -155,14 +169,20 @@ class Import
                 return 'CS';
             case 'Netherlands':
                 return 'NL';
+			case 'Nigeria':
+				return 'NG'; 
             case 'New Caledonia':
                 return 'NC';
+			case 'New Zealand':				
+				return 'NZ';
             case 'Norway':
                 return 'NO';
             case 'Poland':
                 return 'PL';
             case 'Portugal':
                 return 'PT';
+			case 'Reunion':
+				return 'RE';
             case 'Romania':
                 return 'RO';
             case 'Russia':
