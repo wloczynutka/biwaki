@@ -116,6 +116,8 @@ class Import
                 return 'AD';
             case 'Armenia':
                 return 'AM';
+			case 'Australia':
+				return 'AU';
             case 'Austria':
                 return 'AT';
             case 'Azerbaijan':
@@ -124,8 +126,12 @@ class Import
                 return 'BY';
             case 'Bulgaria':
                 return 'BG';
+			case 'Burkina Faso':
+				return 'BF';
             case 'Bosnia and Herzegovina':
                 return 'BA';
+			case 'Canada':
+				return 'CA';
             case 'Croatia':
                 return 'HR';
             case 'Czech Republic':
@@ -135,9 +141,14 @@ class Import
             case 'Egypt':
                 return 'EG';
             case 'England':
+			case 'Scotland':
+            case 'Wales':
+			case 'Northern Ireland':
                 return 'GB';
             case 'Estonia':
                 return 'EE';
+			case 'Ethiopia':
+				return 'ET';
             case 'Finland':
                 return 'FI';
             case 'France':
@@ -156,19 +167,27 @@ class Import
                 return 'IL';
             case 'Italy':
                 return 'IT';
+			case 'Japan':
+				return 'JP';
             case 'Jordan':
                 return 'JO';
             case 'Latvia':
                 return 'LV';
+			case 'Libyan Arab Jamahiriya':
+				return 'LY';
             case 'Lithuania':
                 return 'LT';
             case 'Luxembourg':
                 return 'LU';
+			case 'Mauritania':
+				return 'MR';
             case 'Montenegro':
             case 'Serbia':
                 return 'CS';
             case 'Netherlands':
                 return 'NL';
+			case 'Niger':
+				return 'NE';
 			case 'Nigeria':
 				return 'NG'; 
             case 'New Caledonia':
@@ -187,6 +206,8 @@ class Import
                 return 'RO';
             case 'Russia':
                 return 'RU';
+			case 'Senegal':
+				return 'SN';
             case 'Slovakia':
                 return 'SK';
             case 'Spain':
@@ -197,6 +218,8 @@ class Import
                 return 'CH';
             case 'The former Yugoslav Republic of Macedonia':
                 return 'MK';
+			case 'Turkey':
+				return 'TK';
             case 'Ukraine':
                 return 'UA';
             case 'Western Sahara';
@@ -213,6 +236,8 @@ class Import
                 return 'IE';
             case 'United States';
                 return 'US';
+			case 'United Republic of Tanzania':
+				return 'TZ';
             default:
                 ddd('nieznany kraj:', $countryName);
         }
